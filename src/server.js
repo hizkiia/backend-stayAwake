@@ -1,20 +1,12 @@
-const Hapi = require('@hapi/hapi');
-const routes = require('./routes');
+const express = require('express');
+const mongoose = require('./db'); // adjust the path accordingly
 
-const init = async () => {
-    const server = Hapi.server({
-        port: 9000,
-        host: 'localhost',
-        routes: {
-            cors: {
-                origin: ['*'],
-            },
-        },
-    });
+const app = express();
+const port = 3000;
 
-    server.route(routes);
+// Define your Mongoose models and schemas here
 
-    await server.start();
-    console.log(`Server berjalan pada ${server.info.uri}`);
-};
-init();
+// Start the Express server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
