@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('./database/db'); // adjust the path accordingly
-const route = require('./handler/crud');
+const routes = require('./routes/routes');
 // const Login = require('./model');
 const app = express();
 const port = 3000;
 
 // Define your Mongoose models and schemas here
 app.use(express.json());
-app.use(route);
+app.use(routes);
 
 
 // Start the Express server
