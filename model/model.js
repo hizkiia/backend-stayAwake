@@ -15,10 +15,6 @@ const loginSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  tanggalLahir: {
-    type: Date,
-    required: true,
   }
 });
 
