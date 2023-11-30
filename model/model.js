@@ -1,4 +1,4 @@
-  // Buat file model.js atau sesuaikan dengan kebutuhan Anda
+// Buat file model.js atau sesuaikan dengan kebutuhan Anda
 const mongoose = require('../database/db'); // Sesuaikan path sesuai struktur direktori Anda
 
 // Buat schema untuk model login
@@ -10,12 +10,16 @@ const loginSchema = new mongoose.Schema({
   nomorHp: {
     type: String,
     required: true,
-    unique: true, // Nomor hp harus unik
+    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
+  tanggalLahir: {
+    type: Date,
+    required: true,
+  }
 });
 
 // Buat model Login berdasarkan schema
