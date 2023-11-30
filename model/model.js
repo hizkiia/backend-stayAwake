@@ -1,5 +1,5 @@
-// Buat file model.js atau sesuaikan dengan kebutuhan Anda
-const mongoose = require('./db'); // Sesuaikan path sesuai struktur direktori Anda
+  // Buat file model.js atau sesuaikan dengan kebutuhan Anda
+const mongoose = require('../database/db'); // Sesuaikan path sesuai struktur direktori Anda
 
 // Buat schema untuk model login
 const loginSchema = new mongoose.Schema({

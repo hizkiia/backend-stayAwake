@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoose = require('./db'); // adjust the path accordingly
-const route = require('./crud');
+const mongoose = require('./database/db'); // adjust the path accordingly
+const route = require('./handler/crud');
 // const Login = require('./model');
 const app = express();
 const port = 3000;
