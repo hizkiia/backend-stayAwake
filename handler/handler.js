@@ -1,10 +1,8 @@
-const User = require('../model/userModel')
+const User = require('../model/UserModel')
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const Company = require('../model/companyModel');
-
-
+const Company = require('../model/CompanyModel');
 
 const registerCompany = async (req, res) => {
   try {

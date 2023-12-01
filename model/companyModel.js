@@ -24,7 +24,7 @@ const companySchema = new Schema({
 
 });
 companySchema.methods.getUsersByReferral = async function () {
-    const User = require('./userModel');
+    const User = require('./UserModel');
     return User.getUsersByReferral(this.kodeReferral);
 };
 
