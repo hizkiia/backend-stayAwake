@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const Company = require('../model/CompanyModel');
+const jwt = require('jsonwebtoken');
+
 
 const registerCompany = async (req, res) => {
   try {
@@ -71,6 +73,7 @@ const login = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, company.password);
 
         if (passwordMatch) {
+          // const token = jwt.sign(payload, );
           res.status(200).json({ message: 'Login sebagai perusahaan berhasil' });
         } else {
           res.status(401).json({ message: 'Email atau password salah untuk perusahaan' });
