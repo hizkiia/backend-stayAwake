@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   tanggalLahir: {
-    type: String,
+    type: Date,
     required: true
   },
   golDarah: {
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   validSIM: {
-    type: String,
+    type: Date,
     required: true
   },
   email: {
