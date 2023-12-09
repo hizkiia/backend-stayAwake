@@ -84,6 +84,7 @@ const registerUser = async (req, res) => {
         email,
         password: hashedPassword,
         kodeReferral,
+        //sidjsjdij
       });
 
       await newUser.save();
