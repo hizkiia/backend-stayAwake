@@ -146,8 +146,8 @@ const login = async (req, res) => {
 
 const getUserbyReferral = async (req, res) => {
   try {
-    const { kodeReferral } = req.body; // Gantilah ini dengan cara Anda mendapatkan kodeReferral
-
+    const kodeReferral = req.params.kodeReferral; // Gantilah ini dengan cara Anda mendapatkan kodeReferral
+    console.log(kodeReferral);
     // Pastikan perusahaan yang sedang login memiliki kodeReferral yang sesuai
     const company = await Company.findOne({ kodeReferral });
 

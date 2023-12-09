@@ -4,7 +4,7 @@ const handler = require('../handler/handler');
 
 router.post('/registerUser', handler.registerUser);
 router.post('/registerCompany', handler.registerCompany);
-router.post('/getUser', handler.getUserbyReferral);
+router.get('/getUser/:kodeReferral', handler.getUserbyReferral);
 router.post('/login', handler.login);
 
 module.exports = router;
