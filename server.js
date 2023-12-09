@@ -22,7 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
-
+app.get("/", (req, res) => {
+    console.log("Response success")
+    res.send("Response success!")
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on port http://localhost:${PORT}`);
