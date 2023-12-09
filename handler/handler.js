@@ -98,59 +98,51 @@ const registerUser = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password } = req.body;
 
-    if (role === 'company') {
-      const company = await Company.findOne({ email });
+    // Check if the email is registered as a company
+    const company = await Company.findOne({ email });
 
-      if (company) {
-        const passwordMatch = await bcrypt.compare(password, company.password);
+    // Check if the email is registered as a user
+    const user = await User.findOne({ email });
 
-        if (passwordMatch) {
-          // const createJwtToken = jwt.sign({ id: company._id }, await callAccessSecretVersion());
-          const createJwtToken = jwt.sign({ id: company._id }, await process.env.KEY);
-          const data = {
-            id: company._id,
-            name: company.namaCompany,
-            token: createJwtToken,
-          };
-          res.status(200).json({ message: 'Login sebagai perusahaan berhasil', data: data });
+    if (company) {
+      const passwordMatch = await bcrypt.compare(password, company.password);
 
-        } else {
-          res.status(401).json({ message: 'Email atau password salah untuk perusahaan' });
-        }
+      if (passwordMatch) {
+        const createJwtToken = jwt.sign({ id: company._id }, await process.env.KEY);
+        const data = {
+          id: company._id,
+          name: company.namaCompany,
+          token: createJwtToken,
+        };
+        res.status(200).json({ message: 'Login sebagai perusahaan berhasil', data: data });
       } else {
         res.status(401).json({ message: 'Email atau password salah untuk perusahaan' });
       }
-    } else if (role === 'user') {
-      const user = await User.findOne({ email });
+    } else if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
 
-      if (user) {
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (passwordMatch) {
-          // const createJwtToken = jwt.sign({ id: user._id }, await callAccessSecretVersion());
-          const createJwtToken = jwt.sign({ id: user._id }, await process.env.KEY);
-          const data = {
-            id: user._id,
-            name: user.nama,
-            token: createJwtToken,
-          };
-          res.status(200).json({ message: 'Login sebagai pengguna berhasil', data: data });
-        } else {
-          res.status(401).json({ message: 'Email atau password salah untuk pengguna' });
-        }
+      if (passwordMatch) {
+        const createJwtToken = jwt.sign({ id: user._id }, await process.env.KEY);
+        const data = {
+          id: user._id,
+          name: user.nama,
+          token: createJwtToken,
+        };
+        res.status(200).json({ message: 'Login sebagai pengguna berhasil', data: data });
       } else {
         res.status(401).json({ message: 'Email atau password salah untuk pengguna' });
       }
     } else {
-      res.status(400).json({ message: 'Role tidak valid' });
+      res.status(401).json({ message: 'Email tidak terdaftar' });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Terjadi kesalahan' });
   }
 };
+
 
 const getUserbyReferral = async (req, res) => {
   try {
