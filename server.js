@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require('cors');
 const dotenv = require('dotenv');
 const routes = require('./routes/routes')
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8000;
 // const appendUrl = (url) => `${VERSION_API}${url}`;
 
 // MIDDLEWARE
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
