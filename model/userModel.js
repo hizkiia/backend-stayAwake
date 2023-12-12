@@ -33,10 +33,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  validSIM: {
-    type: Date,
-    required: true
-  },
   email: {
     type: String,
     required: true,

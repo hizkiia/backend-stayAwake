@@ -22,11 +22,12 @@ const jwt = require('jsonwebtoken');
 
 const registerCompany = async (req, res) => {
   try {
-    const { namaCompany, email, password } = req.body;
+    const { namaCompany, bidangCompany, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newCompany = new Company({
       namaCompany,
+      bidangCompany,
       kodeReferral: generateReferralCode(),
       email,
       password: hashedPassword,
@@ -42,8 +43,7 @@ const registerCompany = async (req, res) => {
 const registerUser = async (req, res) => {
   try {
     const { nama, tempatLahir, tanggalLahir, golDarah,
-      jenisKelamin, pekerjaan, alamat, noTelepon,
-      validSIM, email, password, kodeReferral } = req.body;
+      jenisKelamin, pekerjaan, alamat, noTelepon, email, password, kodeReferral } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     if (kodeReferral) {
@@ -62,7 +62,6 @@ const registerUser = async (req, res) => {
         pekerjaan,
         alamat,
         noTelepon,
-        validSIM,
         email,
         password: hashedPassword,
         kodeReferral,
@@ -80,7 +79,6 @@ const registerUser = async (req, res) => {
         pekerjaan,
         alamat,
         noTelepon,
-        validSIM,
         email,
         password: hashedPassword,
         kodeReferral,

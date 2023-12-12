@@ -7,6 +7,10 @@ const companySchema = new Schema({
         type: String,
         required: true,
     },
+    bidangCompany: {
+        type: String,
+        required: true,
+    },
     kodeReferral: {
         type: String,
         required: true,
