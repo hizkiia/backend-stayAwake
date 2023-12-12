@@ -6,5 +6,6 @@ router.post('/registerUser', handler.registerUser);
 router.post('/registerCompany', handler.registerCompany);
 router.get('/getUser/:kodeReferral', handler.getUserbyReferral);
 router.post('/login', handler.login);
+router.get('/getAllAccount', handler.getAllAccount);
 
 module.exports = router;

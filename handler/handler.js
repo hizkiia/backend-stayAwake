@@ -165,6 +165,38 @@ const getUserbyReferral = async (req, res) => {
   }
 };
 
+const getAllAccount = async (req, res) => {
+  try {
+    // Retrieve all users
+    const users = await User.find();
+
+    // Retrieve all companies
+    const companies = await Company.find();
+
+    // Combine user and company data
+    const allAccounts = {
+      users: users.map(user => ({
+        id: user._id,
+        name: user.nama,
+        email: user.email,
+        // Add other user properties as needed
+      })),
+      companies: companies.map(company => ({
+        id: company._id,
+        name: company.namaCompany,
+        email: company.email,
+        // Add other company properties as needed
+      })),
+    };
+
+    res.status(200).json({ message: 'Data semua akun berhasil ditemukan', data: allAccounts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan' });
+  }
+};
+
+
 function generateReferralCode(length = 6) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let referralCode = '';
@@ -177,4 +209,4 @@ function generateReferralCode(length = 6) {
   return referralCode;
 }
 
-module.exports = { registerCompany, registerUser, login, getUserbyReferral };
+module.exports = { registerCompany, registerUser, login, getUserbyReferral, getAllAccount };
