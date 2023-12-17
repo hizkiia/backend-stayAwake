@@ -15,8 +15,8 @@
 4. Create .env file
 5. Install and configure MongoDB to your machine
 6. For mongodb.js change the secretValue variable into process.env.MONGO_DB
-7. For authHandler.js line 73 change the callAccessSecretVersion() into process.env.KEY
-8. For Auth.js line 41 change the callAccessSecretVersion() into process.env.KEY
+7. For handler.js change all the callAccessSecretVersion() into process.env.KEY
+8. For auth.js change the callAccessSecretVersion() into process.env.KEY
 9. npm run start-dev
 
 # Example of .env file
@@ -28,62 +28,81 @@ MONGO_DB = mongodb://localhost:27017/
 # How to run the API on Google Cloud Platform
 1. Set up APP Engine
 2. Set up MongoDB Atlas
-3. Set up Cloud Storage
-4. Store Secret Key in Secret Manager [KEY, MONGO_DB, SERVICE_ACCOUNT]
-5. Example value for KEY is  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx and example value for MONGO_DB is mongodb+srv://username:password@xxxxxxxxxxxx.mongodb.net/
-6. Clone Repo in GCP IDE
-7. Change All Configuration for GCP [Project_ID, Bucket_Name, Secret_Path]
-8. Deploy it
+3. Store Secret Key in Secret Manager [KEY, MONGO_DB]
+4. Example value for KEY is  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx and example value for MONGO_DB is mongodb+srv://username:password@xxxxxxxxxxxx.mongodb.net/
+5. Clone Repo in GCP IDE
+6. Change All Configuration for GCP [Project_ID, Secret_Path]
+7. Deploy it
 
 # Endpoints
 
-## Register
+## Register User
 
 - Method: POST
-- Path URL: /api/v1/auth/register
+- Path URL: /registerUser
 - Header: -
 - Body:
-    - name: string
+    - nama: string
+    - tempatLahir: string
+    - tanggalLahir: date(YYYY-MM-DD)
+    - golDarah: string
+    - jenisKelamin: string
+    - pekerjaan: string
+    - alamat: string
+    - noTelepon: string
     - email: string(email)
-    - password: string(min 8 max 20 digit)
-    - passwordConfirmation: string(must be the same as password)
+    - password: string
+    - kodeReferral: string(non-required)
+      
+- Authorization: -
+- Response (example):
+
+```json
+{"message":"Akun pengguna berhasil dibuat"}
+```
+## Register Company
+
+- Method: POST
+- Path URL: /registerCompany
+- Header: -
+- Body:
+    - namaCompany: string
+    - bidangCompany: string
+    - email: string
+    - password: string
+      
 - Authorization: -
 - Response (example):
 
 ```json
 {
-    "error": false,
-    "message": "Akun berhasil dibuat",
-    "data": {
-        "name": "string",
-        "email": "string",
-        "password": "string",
-        "accountLevel": "integer",
-        "accountExp": "integer",
-	"completedSubQuiz": "integer",
-        "completedQuiz": "integer",
-        "createdAt": "date",
-        "_id": "ObjectID",
-        "imageUrl": "string",
-        "__v": "integer"
-    }
+    "message": "Akun perusahaan berhasil dibuat"
 }
 ```
 
 ## Login
 - Method: POST
-- Path URL: /api/v1/auth/login
+- Path URL: /login
 - Header: -
 - Body:
-    - email: string(email)
-    - password: string(min 8 max 20 digit)
+    - email: string
+    - password: string
 - Authorization: -
 - Response (example):
 
 ```json
 {
-    "error": false,
-    "message": "success",
+    "message": "Login sebagai pengguna berhasil",
+    "data": {
+        "id": "ObjectID",
+        "name": "string",
+        "token": "string"
+    }
+}
+```
+```json
+{
+    "message": "Login sebagai perusahaan berhasil",
     "data": {
         "id": "ObjectID",
         "name": "string",
@@ -92,10 +111,10 @@ MONGO_DB = mongodb://localhost:27017/
 }
 ```
 
-## Get Profile
+## Get User by Referral
 
 - Method: GET
-- Path URL: /api/v1/account/profile
+- Path URL: /getUser/:kodeReferral
 - Header: -
 - Body: -
 - Authorization: Bearer Token
@@ -103,21 +122,22 @@ MONGO_DB = mongodb://localhost:27017/
 
 ```json
 {
-    "error": false,
-    "message": "success",
-    "data": {
+    "message": "Data pengguna ditemukan",
+    "users": {
         "_id": "ObjectID",
-        "name": "string",
-        "email": "string",
-        "password": "string",
-        "accountLevel": "integer",
-        "accountExp": "integer",
-        "completedQuiz": "integer",
-        "createdAt": "date",
-        "imageUrl": "string",
-        "__v": "integer"
-	"completedSubQuiz": "integer",
-    }
+        "nama": "string",
+    	"tempatLahir": "string",
+	"tanggalLahir": "date",
+    	"golDarah": "string"
+    	"jenisKelamin": "string",
+    	"pekerjaan": "string",
+    	"alamat": "string",
+    	"noTelepon": "string",
+    	"email": "string",
+    	"password": "string",
+    	"kodeReferral": "string",
+ 	"__v": 0
+    },
 }
 ```
 
