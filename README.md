@@ -123,20 +123,46 @@ MONGO_DB = mongodb://localhost:27017/
 ```json
 {
     "message": "Data pengguna ditemukan",
-    "users": {
-        "_id": "ObjectID",
+    "usersData": {
+        "id": "ObjectID",
         "nama": "string",
     	"tempatLahir": "string",
-	"tanggalLahir": "date",
-    	"golDarah": "string"
+	    "tanggalLahir": "date",
+    	"golDarah": "string",
     	"jenisKelamin": "string",
     	"pekerjaan": "string",
     	"alamat": "string",
     	"noTelepon": "string",
     	"email": "string",
-    	"password": "string",
     	"kodeReferral": "string",
- 	"__v": 0
+    },
+}
+```
+
+## Get User by Email
+
+- Method: GET
+- Path URL: /getAccount?email=email
+- Header: -
+- Body: -
+- Authorization: Bearer Token
+- Response (example):
+
+```json
+{
+    "message": "Data pengguna ditemukan",
+    "data": {
+        "id": "ObjectID",
+        "name": "string",
+    	"tempatLahir": "string",
+	    "tanggalLahir": "date",
+    	"golDarah": "string",
+    	"jenisKelamin": "string",
+    	"pekerjaan": "string",
+    	"alamat": "string",
+    	"noTelepon": "string",
+    	"email": "string",
+    	"kodeReferral": "string"
     },
 }
 ```

@@ -159,8 +159,21 @@ const getUserbyReferral = async (req, res) => {
 
     // Gunakan metode pada model Company untuk mendapatkan pengguna dengan kode referral tertentu
     const users = await company.getUsersByReferral();
+    const userData = users.map(user => ({
+      id: user._id,
+      name: user.nama,
+      tempatLahir: user.tempatLahir,
+      tanggalLahir: user.tanggalLahir,
+      golDarah: user.golDarah,
+      jenisKelamin: user.jenisKelamin,
+      pekerjaan: user.pekerjaan,
+      alamat: user.alamat,
+      noTelepon: user.noTelepon,
+      email: user.email,
+      kodeReferral: user.kodeReferral,
+    }));
 
-    res.status(200).json({ message: 'Data pengguna ditemukan', users });
+    res.status(200).json({ message: 'Data pengguna ditemukan', userData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Terjadi kesalahan' });
@@ -193,8 +206,8 @@ const getAllAccount = async (req, res) => {
         pekerjaan: user.pekerjaan,
         alamat: user.alamat,
         noTelepon: user.noTelepon,
-        email: user.email
-
+        email: user.email,
+        kodeReferral: user.kodeReferral
       })),
       companies: companies.map(company => ({
         id: company._id,
@@ -214,49 +227,36 @@ const getAllAccount = async (req, res) => {
 
 const getAccountByEmail = async (req, res) => {
   try {
-    // Check if the request contains an email parameter
     const { email } = req.query;
 
-    // Retrieve all users and companies
-    const usersPromise = User.find({ email });
-    const companiesPromise = Company.find({ email });
+    const users = await User.find({ email });
 
-    // Wait for both queries to complete
-    const [users, companies] = await Promise.all([usersPromise, companiesPromise]);
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'Email tidak ditemukan' });
+    }
 
-    // Combine user and company data
-    const allAccounts = {
-      users: users.map(user => ({
-        id: user._id,
-        name: user.nama,
-        tempatLahir: user.tempatLahir,
-        tanggalLahir: user.tanggalLahir,
-        golDarah: user.golDarah,
-        jenisKelamin: user.jenisKelamin,
-        pekerjaan: user.pekerjaan,
-        alamat: user.alamat,
-        noTelepon: user.noTelepon,
-        email: user.email,
-        kodeReferral: user.kodeReferral,
+    const userData = users.map(user => ({
+      id: user._id,
+      name: user.nama,
+      tempatLahir: user.tempatLahir,
+      tanggalLahir: user.tanggalLahir,
+      golDarah: user.golDarah,
+      jenisKelamin: user.jenisKelamin,
+      pekerjaan: user.pekerjaan,
+      alamat: user.alamat,
+      noTelepon: user.noTelepon,
+      email: user.email,
+      kodeReferral: user.kodeReferral,
+    }));
 
-      })),
-      companies: companies.map(company => ({
-        id: company._id,
-        name: company.namaCompany,
-        bidangCompany: company.bidangCompany,
-        kodeReferral: company.kodeReferral,
-        email: company.email
-      })),
-    };
-
-    res.status(200).json({ message: 'Data akun berhasil ditemukan', data: allAccounts });
+    res.status(200).json({ message: 'Data pengguna ditemukan', data: userData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Terjadi kesalahan' });
   }
 };
 
-module.exports = { getAllAccount };
+
 
 
 
