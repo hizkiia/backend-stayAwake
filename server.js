@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const routes = require('./routes/routes')
+
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
 const app = express();
-
-
+//Endpoint
+const routes = require('./routes/routes')
+const authRoutes = require('./routes/authRoutes')
 // Database & Env
 dotenv.config();
 require('./database/db');
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
+app.use(authRoutes);
 
 app.get("/", (req, res) => {
     console.log("Response success")

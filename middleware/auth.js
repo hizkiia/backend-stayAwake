@@ -2,24 +2,23 @@ const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
-const Account = require('../model/Account');
 const Response = require('../model/Response');
 const clearToken = require('../utils/clearToken');
 const tokenRevocation = require('../utils/tokenRevocation');
 
-const secretmanagerClient = new SecretManagerServiceClient();
+// const secretmanagerClient = new SecretManagerServiceClient();
 
-const callAccessSecretVersion = async () => {
-    // Construct request
-    const request = {
-        name: 'projects/698487513235/secrets/tokenkey/versions/1'
-    };
+// const callAccessSecretVersion = async () => {
+//     // Construct request
+//     const request = {
+//         name: 'projects/698487513235/secrets/tokenkey/versions/1'
+//     };
 
-    // Run request
-    const [response] = await secretmanagerClient.accessSecretVersion(request);
-    const secretValue = response.payload.data.toString();
-    return secretValue;
-}
+//     // Run request
+//     const [response] = await secretmanagerClient.accessSecretVersion(request);
+//     const secretValue = response.payload.data.toString();
+//     return secretValue;
+// }
 
 const Auth = async (req, res, next) => {
     try {
@@ -39,8 +38,8 @@ const Auth = async (req, res, next) => {
         }
 
         jwt.verify(myToken, await process.env.KEY, async (error, payload) => {
-            // jwt.verify(myToken, await callAccessSecretVersion(), async (error, payload) => {
             if (error) {
+                console.error(error);
                 res.status(httpStatus.UNAUTHORIZED).json(response);
                 return;
             }
