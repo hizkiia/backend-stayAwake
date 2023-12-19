@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const httpStatus = require('http-status');
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
-
+const User = require('../model/userModel');
 const Response = require('../model/Response');
 const clearToken = require('../utils/clearToken');
 const tokenRevocation = require('../utils/tokenRevocation');
@@ -45,8 +45,8 @@ const Auth = async (req, res, next) => {
             }
 
             const { id } = payload;
-            const account = await Account.findOne({ _id: id });
-            req.currentUser = account;
+            const user = await User.findOne({ _id: id });
+            req.currentUser = user;
             next();
         });
     } catch (error) {
